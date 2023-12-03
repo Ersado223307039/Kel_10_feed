@@ -6,15 +6,21 @@ import android.os.Bundle
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
+import com.example.kel_10_feed.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
-    @SuppressLint("MissingInflatedId")
+    private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding= ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         var NavController = findNavController(R.id.fragmentContainerView2)
         var bottomnav = findViewById<BottomNavigationView>(R.id.bottomNavigationView2)
         bottomnav.setupWithNavController(NavController)
+        binding.notificationBotton.setOnClickListener{
+            val bottomSheetDialog = NotificationBottomFragment()
+            bottomSheetDialog.show(supportFragmentManager,"test")
+        }
     }
 }
