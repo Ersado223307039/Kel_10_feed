@@ -10,5 +10,6 @@
     <color name="textColor">#1FC57A</color>
     <color name="startColor">#53E888 </color>
     <color name="endColor">#1FC57A</color>
+    <color name="iconColor">#FEAD1D</color>
 
 </resources>
