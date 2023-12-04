@@ -1,11 +1,14 @@
 package com.example.kel_10_feed.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.kel_10_feed.CongratsBottomSheet
+import com.example.kel_10_feed.PayOutActivity
 import com.example.kel_10_feed.R
 import com.example.kel_10_feed.adapter.CartAdapter
 import com.example.kel_10_feed.databinding.FragmentCartBinding
@@ -40,6 +43,12 @@ class CartFragment : Fragment() {
         val adapter = CartAdapter(ArrayList(cartFoodName),ArrayList(cartItemPrice),ArrayList(cartImage))
         binding.cartRecycleView.layoutManager =LinearLayoutManager(requireContext())
         binding.cartRecycleView.adapter =adapter
+
+        binding.procesedBotton.setOnClickListener{
+            val intent= Intent(requireContext(),PayOutActivity::class.java)
+            startActivity(intent)
+        }
+
         return binding.root
 
     }
