@@ -49,7 +49,7 @@ class CartAdapter(private val cartItems:MutableList<String>,private  val CartIte
             }
 
         }
-        private    fun deceaseQuantity(position: Int){
+        private  fun deceaseQuantity(position: Int){
             if (itemQualities[position]>1){
                 itemQualities[position]--
                 binding.cartquantity.text= itemQualities[position].toString()
