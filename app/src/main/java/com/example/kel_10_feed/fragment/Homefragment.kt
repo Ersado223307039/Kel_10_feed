@@ -11,12 +11,18 @@ import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.interfaces.ItemClickListener
 import com.denzcoskun.imageslider.models.SlideModel
 import com.example.kel_10_feed.R
+import com.example.kel_10_feed.adapter.MenuAdapter
 import com.example.kel_10_feed.adapter.PopulerAdapter
 import com.example.kel_10_feed.databinding.FragmentHomefragmentBinding
+import com.example.kel_10_feed.model.MenuItem
+import com.google.firebase.database.*
 
 
 class Homefragment : Fragment() {
     private lateinit var  binding: FragmentHomefragmentBinding
+    private lateinit var database:FirebaseDatabase
+    private lateinit var menuitems:MutableList<MenuItem>
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,10 +40,48 @@ class Homefragment : Fragment() {
             val bottomSheetDialog = menuBottomSheetFragment()
             bottomSheetDialog.show(parentFragmentManager,"tes")
         }
+        retraieveAndDisplayPopulerMeu()
         return binding.root
 
 
 
+
+    }
+
+    private fun retraieveAndDisplayPopulerMeu() {
+        database=FirebaseDatabase.getInstance()
+        val foodRef:DatabaseReference=database.reference.child("menu")
+        menuitems= mutableListOf()
+
+        foodRef.addListenerForSingleValueEvent(object :ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (foodSnapshot in snapshot.children){
+                    val menuItem=foodSnapshot.getValue(MenuItem::class.java)
+                    menuItem?.let { menuitems.add(it) }
+                }
+                randomPopulerItem()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
+
+    }
+
+    private fun randomPopulerItem() {
+       val index = menuitems.indices.toList().shuffled()
+        val numItemToShow=6
+        val subsetMenuItems=index.take(numItemToShow).map { menuitems[it] }
+        
+        setPopulerItemAdapter(subsetMenuItems)
+    }
+
+    private fun setPopulerItemAdapter(subsetMenuItems: List<MenuItem>) {
+        val adapter = MenuAdapter(subsetMenuItems,requireContext())
+        binding.populerRecycleView.layoutManager = LinearLayoutManager(requireContext())
+        binding.populerRecycleView.adapter=adapter
 
     }
 
@@ -66,17 +110,9 @@ class Homefragment : Fragment() {
 
 
         })
-        val foodName = listOf("burger","sandwitch","momo","item")
-        val price = listOf("$5","$6","$7","$8")
-        val populerFoodImages = listOf(R.drawable.menu1,R.drawable.menu2,R.drawable.menu3,R.drawable.menu4)
-        val adapter = PopulerAdapter(foodName,price,populerFoodImages,requireContext())
-        binding.populerRecycleView.layoutManager = LinearLayoutManager(requireContext())
-        binding.populerRecycleView.adapter=adapter
+
 
 
     }
 
-    companion object {
-
-    }
 }
