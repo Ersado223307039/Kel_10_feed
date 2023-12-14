@@ -57,6 +57,7 @@
                 android:text="Name" />
 
             <EditText
+                android:id="@+id/name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -86,11 +87,12 @@
                 android:text="Address" />
 
             <EditText
+                android:id="@+id/address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
+                android:layout_weight="1"
                 android:background="@android:color/transparent"
                 android:ems="10"
                 android:inputType="textMultiLine"
@@ -117,6 +119,7 @@
                 android:text="Phone" />
 
             <EditText
+                android:id="@+id/phone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -175,6 +178,7 @@
                 android:text="Total Amount" />
 
             <EditText
+                android:id="@+id/totalAmaount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

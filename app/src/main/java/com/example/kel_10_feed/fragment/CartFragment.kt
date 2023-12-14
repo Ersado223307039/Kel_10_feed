@@ -45,8 +45,7 @@ class CartFragment : Fragment() {
 
         binding.procesedBotton.setOnClickListener{
             getOrderItemDetail()
-            val intent= Intent(requireContext(),PayOutActivity::class.java)
-            startActivity(intent)
+
         }
 
         return binding.root
@@ -54,6 +53,56 @@ class CartFragment : Fragment() {
     }
 
     private fun getOrderItemDetail() {
+        val orderIdReference:DatabaseReference=database.reference.child("user").child(userId).child("CartItems")
+        val foodName= mutableListOf<String>()
+        val foodPrice= mutableListOf<String>()
+        val foodImage= mutableListOf<String>()
+        val foodDescription= mutableListOf<String>()
+        val foodIngredients= mutableListOf<String>()
+        val foodQuantities= cartAdapter.getupdatedItemQuantities()
+        orderIdReference.addListenerForSingleValueEvent(object :ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for(foodSnapshot in snapshot.children){
+                    val orderItems=foodSnapshot.getValue(CartItems::class.java)
+                    orderItems?.foodname?.let { foodName.add(it) }
+                    orderItems?.foodPrice?.let { foodPrice.add(it) }
+                    orderItems?.foodDescription?.let { foodDescription.add(it) }
+                    orderItems?.foodImage?.let { foodImage.add(it) }
+                    orderItems?.foodIngredint?.let { foodIngredients.add(it) }
+                }
+                orderNow(foodName,foodPrice,foodDescription,foodImage,foodIngredients,foodQuantities)
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(requireContext(), "order making failed. Please try again", Toast.LENGTH_SHORT).show()
+
+            }
+
+        })
+
+
+    }
+
+    private fun orderNow(
+        foodName: MutableList<String>,
+        foodPrice: MutableList<String>,
+        foodDescription: MutableList<String>,
+        foodImage: MutableList<String>,
+        foodIngredients: MutableList<String>,
+        foodQuantities: MutableList<Int>
+    ) {
+       if (isAdded && context!=null){
+           val intent=Intent(requireContext(),PayOutActivity::class.java)
+           intent.putExtra("FoodItemName",foodName as ArrayList<String>)
+           intent.putExtra("FoodItemPrice",foodPrice as ArrayList<String>)
+           intent.putExtra("FoodItemImage",foodImage as ArrayList<String>)
+           intent.putExtra("FoodItemDescription",foodDescription as ArrayList<String>)
+           intent.putExtra("FoodItemIngredient",foodIngredients as ArrayList<String>)
+           intent.putExtra("FoodItemQuantities",foodQuantities as ArrayList<Int>)
+           startActivity(intent)
+       }
+
 
     }
 
@@ -86,9 +135,16 @@ class CartFragment : Fragment() {
             }
 
             private fun setAdapter() {
-                val adapter=CartAdapter(requireContext(),foodNames,foodPrices,foodDescriptions,foodImageUri,quantity,foodIngredients)
+                cartAdapter=CartAdapter(
+                    requireContext(),
+                    foodNames,
+                    foodPrices,
+                    foodDescriptions,
+                    foodImageUri,
+                    quantity,
+                    foodIngredients)
                 binding.cartRecycleView.layoutManager =LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
-                binding.cartRecycleView.adapter =adapter
+                binding.cartRecycleView.adapter =cartAdapter
 
             }
 
