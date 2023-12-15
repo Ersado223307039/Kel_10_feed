@@ -3,8 +3,9 @@ package com.example.kel_10_feed.model
 import android.os.Parcel
 import android.os.Parcelable
 import java.util.ArrayList
+import java.io.Serializable
 
-class OrderDetails():Parcelable {
+class OrderDetails():Serializable {
     var userid: String? =null
     var username:String?=null
     var foodNames:MutableList<String>?=null
@@ -62,7 +63,7 @@ class OrderDetails():Parcelable {
     }
 
 
-    override fun writeToParcel(parcel: Parcel, flags: Int) {
+   fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(userid)
         parcel.writeString(username)
         parcel.writeString(address)
@@ -74,7 +75,7 @@ class OrderDetails():Parcelable {
         parcel.writeLong(currentTime)
     }
 
-    override fun describeContents(): Int {
+    fun describeContents(): Int {
         return 0
     }
 

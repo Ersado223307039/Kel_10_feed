@@ -49,7 +49,7 @@ class HistoryFragment : Fragment() {
     private fun seeItemsRecentsBuy() {
         listOfOrderItem.firstOrNull()?.let{recentBuy->
             val intent=Intent(requireContext(),recentOrderItems::class.java)
-            intent.putExtra("RecentBuyOrderItem",recentBuy)
+            intent.putExtra("RecentBuyOrderItem", ArrayList(listOfOrderItem))
             startActivity(intent)
         }
 
