@@ -1,5 +1,6 @@
 package com.example.kel_10_feed
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.kel_10_feed.databinding.ActivityPayOutBinding
@@ -12,7 +13,7 @@ class PayOutActivity : AppCompatActivity() {
     private lateinit var name:String
     private lateinit var address:String
     private lateinit var phone:String
-    private lateinit var totalAmount:ArrayList<String>
+    private lateinit var totalAmount:String
     private lateinit var foodItemName:ArrayList<String>
     private lateinit var foodItemPrice:ArrayList<String>
     private lateinit var foodItemImage:ArrayList<String>
@@ -30,11 +31,47 @@ class PayOutActivity : AppCompatActivity() {
         auth=FirebaseAuth.getInstance()
         databaseReference=FirebaseDatabase.getInstance().getReference()
         setUserData()
+
+        val intent= intent
+        foodItemName=intent.getStringArrayListExtra("FoodItemName") as ArrayList<String>
+        foodItemPrice=intent.getStringArrayListExtra("FoodItemPrice") as ArrayList<String>
+        foodItemImage=intent.getStringArrayListExtra("FoodItemImage") as ArrayList<String>
+        foodItemDescription=intent.getStringArrayListExtra("FoodItemDescription") as ArrayList<String>
+        foodItemIngredient=intent.getStringArrayListExtra("FoodItemIngredient") as ArrayList<String>
+        foodItemQuantities=intent.getIntegerArrayListExtra("FoodItemQuantities") as ArrayList<Int>
+
+       totalAmount=calculateTotalAmount().toString() +"$"
+        binding.totalAmaount.isEnabled=false
+        binding.totalAmaount.setText(totalAmount)
+
+        binding.backbutton.setOnClickListener {
+            finish()
+        }
+
         binding.placeMyOrder.setOnClickListener {
             val bottomSheetDeialog = CongratsBottomSheet()
             bottomSheetDeialog.show(supportFragmentManager,"test")
         }
     }
+
+    private fun calculateTotalAmount(): Int {
+        var totalAmount=0
+        for (i in 0 until foodItemPrice.size){
+            var price = foodItemPrice[i]
+            val lastChar= price.last()
+            val priceIntVale= if (lastChar== '$'){
+                price.dropLast(1).toInt()
+            }else{
+                price.toInt()
+            }
+            var quantity = foodItemQuantities[i]
+            totalAmount += priceIntVale *quantity
+
+        }
+        return totalAmount
+
+    }
+
 
     private fun setUserData() {
         val user=auth.currentUser

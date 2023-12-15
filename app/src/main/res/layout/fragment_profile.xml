@@ -33,12 +33,12 @@
             android:textSize="20sp" />
 
         <EditText
+            android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
-            android:inputType="text"
-            android:text="admin" />
+            android:inputType="text" />
     </LinearLayout>
 
         <LinearLayout
@@ -62,14 +62,14 @@
                 android:textSize="18sp" />
 
             <EditText
+                android:id="@+id/address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
                 android:layout_weight="1"
                 android:ems="10"
-                android:inputType="textMultiLine"
-                android:text="NameLorem Ipsum is placeholder text Comontly used in the grapihs.pc for previewing layout visual" />
+                android:inputType="textMultiLine" />
         </LinearLayout>
 
         <LinearLayout
@@ -93,12 +93,12 @@
                 android:textSize="20sp" />
 
             <EditText
+                android:id="@+id/email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:inputType="textEmailAddress"
-                android:text="adamin@gmail.com" />
+                android:inputType="textEmailAddress" />
         </LinearLayout>
 
         <LinearLayout
@@ -123,18 +123,18 @@
                 android:textSize="20sp" />
 
             <EditText
+                android:id="@+id/phone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:inputType="phone"
-                android:text="1234567890" />
+                android:inputType="phone" />
         </LinearLayout>
 
 
 </LinearLayout>
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/button5"
+        android:id="@+id/safeInfoButton"
         android:elevation="5dp"
         android:background="@drawable/proceedbutonshape"
         android:layout_width="match_parent"

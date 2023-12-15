@@ -15,6 +15,7 @@
 
         <ImageButton
 
+            android:id="@+id/backbutton"
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_marginStart="16dp"
@@ -63,8 +64,7 @@
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
                 android:ems="10"
-                android:inputType="textPersonName"
-                android:text="Name" />
+                android:inputType="textPersonName" />
         </LinearLayout>
         <LinearLayout
             android:layout_marginTop="16dp"
@@ -95,8 +95,7 @@
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
                 android:ems="10"
-                android:inputType="textMultiLine"
-                android:text="NameLorem Ipsum is placeholder text Comontly used in the grapihs.pc for previewing layout visual" />
+                android:inputType="textMultiLine" />
         </LinearLayout>
         <LinearLayout
             android:layout_marginTop="16dp"
@@ -125,8 +124,7 @@
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
                 android:ems="10"
-                android:inputType="phone"
-                android:text="1234567890" />
+                android:inputType="phone" />
         </LinearLayout>
         <LinearLayout
             android:layout_marginTop="16dp"
@@ -187,7 +185,6 @@
                 android:gravity="end"
                 android:inputType="none"
                 android:paddingEnd="32dp"
-                android:text="$5"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
         </LinearLayout>

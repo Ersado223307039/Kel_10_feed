@@ -1,5 +1,6 @@
 package com.example.kel_10_feed.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.net.Uri
@@ -102,6 +103,7 @@ class CartAdapter(
         private  fun deceaseQuantity(position: Int){
             if ( ItemQuanlities[position]>1){
                 ItemQuanlities[position]--
+                cartQuantity[position]= ItemQuanlities[position]
                 binding.cartquantity.text=  ItemQuanlities[position].toString()
             }
 
@@ -110,11 +112,13 @@ class CartAdapter(
         private fun increaseQuantity(position: Int){
             if (ItemQuanlities[position]<10){
                 ItemQuanlities[position]++
+                cartQuantity[position]= ItemQuanlities[position]
                 binding.cartquantity.text=  ItemQuanlities[position].toString()
 
             }
 
         }
+
 
         private fun deleteItem(position: Int) {
          val positionRetrive= bindingAdapterPosition
