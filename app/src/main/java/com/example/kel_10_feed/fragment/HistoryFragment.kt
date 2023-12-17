@@ -1,6 +1,7 @@
 package com.example.kel_10_feed.fragment
 
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -40,10 +41,20 @@ class HistoryFragment : Fragment() {
         database=FirebaseDatabase.getInstance()
 
         retriveBuyHistory()
+
         binding.recentbuyItem.setOnClickListener {
             seeItemsRecentsBuy()
         }
+        binding.ReceivedButton.setOnClickListener {
+            updateOrderStatus()
+        }
         return binding.root
+    }
+
+    private fun updateOrderStatus() {
+        val itemPushKey=listOfOrderItem[0].itemPushKey
+        val completeOrderReference=database.reference.child("CompletedOrder").child(itemPushKey!!)
+        completeOrderReference.child("paymentReceived").setValue(true)
     }
 
     private fun seeItemsRecentsBuy() {
@@ -98,12 +109,11 @@ class HistoryFragment : Fragment() {
                 val uri = Uri.parse(image)
                 Glide.with(requireContext()).load(uri).into(buyAgainFoodImages)
 
-                listOfOrderItem.reverse()
-                if (listOfOrderItem.isNotEmpty()){
-
+                val isOrderIsAccepted=listOfOrderItem[0].orderAceepted
+                if (isOrderIsAccepted){
+                    orderStatus.background.setTint(Color.GREEN)
+                    ReceivedButton.visibility=View.VISIBLE
                 }
-
-
             }
         }
     }
